@@ -6,14 +6,22 @@
 .appContainer {
   display: grid;
   grid-template-columns: 30% 70%;
-  height: auto;
+  height: 100vh;
   .sidebar {
     grid-column: 1;
     background: #1e213a;
-    background-image: url("./Assets/Cloud-background.png");
-    background-repeat: no-repeat;
-    background-size: 450px auto;
-    background-position: 70% 40%;
+    position: relative;
+    .bg {
+      position: absolute;
+      opacity: 0.1;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background-image: url("./Assets/Cloud-background.png");
+      background-repeat: no-repeat;
+      background-size: 450px auto;
+      background-position: 70% 40%;
+    }
     .searchHeader {
       display: flex;
       margin-top: 10%;
@@ -28,6 +36,24 @@
       }
       .searchAction {
         color: white;
+      }
+    }
+    .imgContainer {
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      height: 500px;
+      img {
+        height: 200px;
+        width: 200px;
+      }
+      p:nth-child(2) {
+        font-size: 48px;
+      }
+      p:nth-child(3) {
+        font-size: larger;
       }
     }
   }
@@ -107,6 +133,9 @@
         margin-left: 0;
         margin-right: 40%;
       }
+    }
+    .footer {
+      text-align: center;
     }
   }
 }

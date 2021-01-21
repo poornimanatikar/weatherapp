@@ -1,6 +1,15 @@
 import logo from './logo.svg';
 import styles from './App.module.scss';
 import LightCloud from '../src/Assets/LightCloud.png';
+import Hail from '../src/Assets/Hail.png';
+import HeavyCloud from '../src/Assets/HeavyCloud.png';
+import HeavyRain from '../src/Assets/HeavyRain.png';
+import LightRain from '../src/Assets/LightRain.png';
+import Shower from '../src/Assets/Shower.png';
+import Sleet from '../src/Assets/Sleet.png';
+import Snow from '../src/Assets/Snow.png';
+import Thunderstorm from '../src/Assets/Thunderstorm.png';
+import Clear from '../src/Assets/Clear.png';
 import IconButton from '@material-ui/core/IconButton';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
 import SearchComp from './Search/Search';
@@ -10,6 +19,19 @@ import { weather } from './Assets/weather';
 function App() {
   const woeid = 28218;
   const [selLoc, setSelLoc] = useState({ "consolidated_weather": [] });
+  const [close, setClose ] = useState(false);
+
+  var map1 = new Map();
+  map1.set("sn",Snow);
+  map1.set("sl",Sleet);
+  map1.set("h",Hail);
+  map1.set("t",Thunderstorm);
+  map1.set("hr",HeavyRain);
+  map1.set("lr",LightRain);
+  map1.set("s",Shower);
+  map1.set("hc",HeavyCloud);
+  map1.set("lc",LightCloud);
+  map1.set("c",Clear)
 
   const fetchSelLoc = (loc) => {
     // fetch(`https://cors-anywhere.herokuapp.com/metaweather.com/api/location/${woeid}`, {
@@ -23,58 +45,54 @@ function App() {
     //     console.log(err);
     //   });
     setSelLoc(weather);
+    setClose(!close);
+  }
+  const getImage = (abbr) => {
+    return map1.get(abbr);
+  }
+  const toggleSearch = () => {
+   setClose(!close);
   }
   return (
     <div className={styles.appContainer}>
       <div className={styles.sidebar}>
+        <div className={styles.bg}></div>
         <div className={styles.searchHeader}>
-          <div className={styles.searchText}>
+          <div className={styles.searchText} >
             Search for places
            </div>
-          <div className={styles.searchAction}>
+          <div className={styles.searchAction} onClick={() => toggleSearch()}>
             <IconButton color="primary">
               <MyLocationIcon />
             </IconButton>
           </div>
         </div>
+        <div className={styles.imgContainer}>
+          {selLoc.consolidated_weather[0] && <img src={getImage(selLoc.consolidated_weather[0].weather_state_abbr)}></img>}
+          {selLoc.consolidated_weather[0] && <p>{Math.round(selLoc.consolidated_weather[0].the_temp)} &#8451;</p>}
+          {selLoc.consolidated_weather[0] && <p>{selLoc.consolidated_weather[0].weather_state_name}</p>}
+          {selLoc.parent && <p>{selLoc.parent.title}</p>}
+        </div>
       </div>
-      <SearchComp updateSelLoc={fetchSelLoc} />
+      {close && <SearchComp updateSelLoc={fetchSelLoc} />}
 
       <div className={styles.main}>
         <div className={styles.conversion}>
 
         </div>
         <div className={styles.days}>
-          <div className={styles.today}>
-            <p>Tomorrow</p>
-            <img src={getWeatherStateImg(selLoc.consolidated_weather)}></img>
-            <p>{selLoc.consolidated_weather[1] && <span>{Math.round(selLoc.consolidated_weather[1].min_temp)} &#8451;</span>}
-              {selLoc.consolidated_weather[1] && <span>{Math.round(selLoc.consolidated_weather[1].max_temp)} &#8451;</span>}</p>
-          </div>
-          <div className={styles.sun}>
-            <p>Tomorrow</p>
-            <img src={LightCloud}></img>
-            <p>{selLoc.consolidated_weather[2] && <span>{Math.round(selLoc.consolidated_weather[2].min_temp)} &#8451;</span>}
-              {selLoc.consolidated_weather[2] && <span>{Math.round(selLoc.consolidated_weather[2].max_temp)} &#8451;</span>}</p>
-          </div>
-          <div className={styles.mon}>
-            <p>Tomorrow</p>
-            <img src={LightCloud}></img>
-            <p>{selLoc.consolidated_weather[3] && <span>{Math.round(selLoc.consolidated_weather[3].min_temp)} &#8451;</span>}
-              {selLoc.consolidated_weather[3] && <span>{Math.round(selLoc.consolidated_weather[3].max_temp)} &#8451;</span>}</p>
-          </div>
-          <div className={styles.tue}>
-            <p>Tomorrow</p>
-            <img src={LightCloud}></img>
-            <p>{selLoc.consolidated_weather[4] && <span>{Math.round(selLoc.consolidated_weather[4].min_temp)} &#8451;</span>}
-              {selLoc.consolidated_weather[4] && <span>{Math.round(selLoc.consolidated_weather[4].max_temp)} &#8451;</span>}</p>
-          </div>
-          <div className={styles.wed}>
-            <p>Tomorrow</p>
-            <img src={LightCloud}></img>
-            <p>{selLoc.consolidated_weather[5] && <span>{Math.round(selLoc.consolidated_weather[5].min_temp)} &#8451;</span>}
-              {selLoc.consolidated_weather[5] && <span>{Math.round(selLoc.consolidated_weather[5].max_temp)} &#8451;</span>}</p>
-          </div>
+          {
+            selLoc.consolidated_weather.slice(1).map((value,key)=>{
+              return (
+                <div className={styles.today} key={key}>
+                 <p>Tomorrow</p>
+                 <img src={getImage(value.weather_state_abbr)}></img>
+                 <p><span>{Math.round(value.min_temp)} &#8451;</span>
+                    <span>{Math.round(value.max_temp)} &#8451;</span></p>
+                </div>
+              )
+            })
+          }
         </div>
         <div className={styles.highlight_heading}>
           <span>Today's Highlights</span>
@@ -98,6 +116,7 @@ function App() {
           </div>
         </div>
         <div className={styles.footer}>
+          Poornima Natikar @ devchalleges.io
         </div>
       </div>
     </div>
