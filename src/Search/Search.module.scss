@@ -1,11 +1,15 @@
 .searchPopup {
-position: fixed;
-z-index: 100;
-top:0;
-width: 30%;
-height:100vh;
-background: #1E213A;
-display: flex;
-flex-direction: column;
-color:white;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    width: 30%;
+    height: 100vh;
+    background: #1e213a;
+    display: flex;
+    flex-direction: column;
+    .searchContainer {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
 }

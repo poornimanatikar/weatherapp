@@ -9,7 +9,29 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { city } from '../Assets/city';
+import {withStyles} from '@material-ui/core/styles';
 
+const CssInput = withStyles({
+    root: {
+        border: '1px solid white',
+        color:'white'
+     }
+    },
+  )(Input);
+
+const  CssInputAdornment = withStyles({
+    root: {
+       color: "white",
+    }
+})(InputAdornment)
+
+const CssListItem = withStyles({
+    root: {
+        border:'1px solid white',
+        marginTop:'10px',
+        color:'white'
+    }
+})(ListItem)
 function SearchComp(props) {
     const [search, setSearch] = useState('');
     const [locations, setLocations] = useState([]);
@@ -38,14 +60,15 @@ function SearchComp(props) {
 
     return <div className={styles.searchPopup}>
         <div className={styles.searchContainer}>
-            <Input color="secondary"
-                id="input-with-icon-adornment" value={search} onChange={(e) => handleSearch(e.target.value)}
+            <CssInput color="secondary"
+                id="input-with-icon-adornment" autoComplete="off" placeholder="search location" value={search} onChange={(e) => handleSearch(e.target.value)}
                 startAdornment={
-                    <InputAdornment position="start">
+                    <CssInputAdornment position="start">
                         <Search />
-                    </InputAdornment>
+                    </CssInputAdornment>
                 }
             />
+            <div>
             <Button
                 variant="contained"
                 color="primary"
@@ -54,13 +77,14 @@ function SearchComp(props) {
             > Search
         </Button>
         </div>
+        </div>
         <div className={styles.searchResultContainer}>
             <List className={styles.list}>
                 {locations.map((value, key) => {
                     return (
-                        <ListItem key={key} button onClick={() => handleLocSel(value)}>
+                        <CssListItem key={key} button onClick={() => handleLocSel(value)}>
                             <ListItemText primary={value.title} />
-                        </ListItem>
+                        </CssListItem>
                     )
                 })}
             </List>
