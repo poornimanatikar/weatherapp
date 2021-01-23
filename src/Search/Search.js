@@ -42,17 +42,16 @@ function SearchComp(props) {
         props.updateSelLoc(loc);
     }
     const updateLocations = () => {
-        // fetch(`https://cors-anywhere.herokuapp.com/metaweather.com/api/location/search/?query=${search}`, {
-        //     "method": "GET"
-        // })
-        //     .then(response => response.json())
-        //     .then(response => {
-        //         setLocations(response);
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     });
-        setLocations(city);
+        fetch(`https://cors-anywhere.herokuapp.com/metaweather.com/api/location/search/?query=${search}`, {
+            "method": "GET"
+        })
+            .then(response => response.json())
+            .then(response => {
+                setLocations(response);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
     const handleSearch = (value) => {
         setSearch(value);

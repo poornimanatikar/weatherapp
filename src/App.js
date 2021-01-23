@@ -40,7 +40,6 @@ const CssButton = withStyles({
   }
 })(Button);
 function App() {
-  const woeid = 28218;
   const [selLoc, setSelLoc] = useState({ "consolidated_weather": [] });
   const [close, setClose ] = useState(false);
 
@@ -57,17 +56,17 @@ function App() {
   map1.set("c",Clear)
 
   const fetchSelLoc = (loc) => {
-    // fetch(`https://cors-anywhere.herokuapp.com/metaweather.com/api/location/${woeid}`, {
-    //   "method": "GET"
-    // })
-    //   .then(response => response.json())
-    //   .then(response => {
-    //      setLocations(response);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-    setSelLoc(weather);
+    fetch(`https://cors-anywhere.herokuapp.com/metaweather.com/api/location/${loc.woeid}`, {
+      "method": "GET"
+    })
+      .then(response => response.json())
+      .then(response => {
+        setSelLoc(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    
     setClose(!close);
   }
   const getImage = (abbr) => {
@@ -128,21 +127,21 @@ function App() {
         {selLoc.consolidated_weather[0] && <div className={styles.highlights}>
          <div className={styles.wind}>
             <p> Wind Status</p>
-            <div> {Math.round(selLoc.consolidated_weather[0].wind_speed)} mph </div>
+            <div> <span>{Math.round(selLoc.consolidated_weather[0].wind_speed)}</span> <span>mph</span> </div>
             <div> <Navigation style={getNavigationStyle()}/>{selLoc.consolidated_weather[0].wind_direction_compass}</div>
           </div>
         <div className={styles.humidity}>
             <p>Humidity</p>
-             <div> {Math.round(selLoc.consolidated_weather[0].humidity)} &#37; </div>
+             <div> <span>{Math.round(selLoc.consolidated_weather[0].humidity)}</span><span> &#37;</span> </div>
              <BorderLinearProgress variant="determinate"  value={Math.round(selLoc.consolidated_weather[0].humidity)}/>
           </div>
           <div className={styles.visibility}>
             <p>Visibility</p>
-            {selLoc.consolidated_weather[0] && <div> {Math.round(selLoc.consolidated_weather[0].visibility)} miles </div>}
+            {selLoc.consolidated_weather[0] && <div> <span>{Math.round(selLoc.consolidated_weather[0].visibility)}</span><span> miles</span> </div>}
           </div>
           <div className={styles.airPressure}>
             <p>Air Pressure</p>
-            {selLoc.consolidated_weather[0] && <div> {Math.round(selLoc.consolidated_weather[0].air_pressure)} mb </div>}
+            {selLoc.consolidated_weather[0] && <div> <span>{Math.round(selLoc.consolidated_weather[0].air_pressure)}</span> <span>mb </span></div>}
           </div>
         </div>}
         <div className={styles.footer}>

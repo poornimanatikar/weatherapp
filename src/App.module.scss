@@ -1,7 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .appContainer {
   display: grid;
   grid-template-columns: 30% 70%;
   height: 100vh;
+  font-family: "Raleway", sans-serif;
   .sidebar {
     grid-column: 1;
     background: #1e213a;
@@ -43,6 +51,8 @@
       }
       p:nth-child(3) {
         font-size: larger;
+        color: #a09fb1;
+        font-weight: 600;
       }
     }
   }
@@ -69,6 +79,8 @@
       justify-content: center;
       p {
         flex-basis: 15%;
+        font-size: 16px;
+        font-weight: 500;
       }
       img {
         width: 56px;
@@ -84,7 +96,9 @@
       height: 100px;
       display: flex;
       align-items: center;
-      margin-left: 2%;
+      margin: 5%;
+      font-weight: 700;
+      font-size: 24px;
     }
     .highlights {
       display: grid;
@@ -93,17 +107,28 @@
       margin-left: 6%;
       row-gap: 5%;
       column-gap: 3%;
+      height: 100%;
+
       & > div {
-        //  margin-left: 20%;
-        //  margin-right: 20%;
-        //  margin-top: 5%;
-        //  margin-bottom: 5%;
         background: #1e213a;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 120px;
+        p:nth-child(1) {
+          font-weight: 500;
+          font-size: 16px;
+        }
+        div:nth-child(2) {
+          span:nth-child(1) {
+            font-weight: 700;
+            font-size: 50px;
+          }
+          span:nth-child(2) {
+            font-weight: 500;
+            font-size: 30px;
+          }
+        }
       }
       .wind {
         grid-row: 1;
@@ -112,8 +137,6 @@
       .humidity {
         grid-row: 1;
         grid-column: 2;
-        //margin-left: 0;
-        //margin-right: 40%;
       }
       .visibility {
         grid-row: 2;
@@ -122,11 +145,12 @@
       .airPressure {
         grid-row: 2;
         grid-column: 2;
-        //margin-left: 0;
-        //margin-right: 40%;
       }
     }
     .footer {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
       text-align: center;
     }
   }
