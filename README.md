@@ -57,7 +57,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [N
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/poornimanatikar/todoapp
+$ git clone https://github.com/poornimanatikar/weatherapp
 
 # Install dependencies
 $ npm install && yarn install
